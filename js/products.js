@@ -94,7 +94,10 @@ class ProductCatalog {
     // 2. Fetch from Google Sheet if Sheet ID is provided
     if (config.googleSheetId && config.googleSheetId.trim() !== "") {
       try {
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${config.googleSheetId}/gviz/tq?tqx=out:json`;
+        const tabParam = (config.sheetTabName && config.sheetTabName.trim() !== "") 
+          ? `&sheet=${encodeURIComponent(config.sheetTabName.trim())}` 
+          : "";
+        const sheetUrl = `https://docs.google.com/spreadsheets/d/${config.googleSheetId}/gviz/tq?tqx=out:json${tabParam}`;
         const response = await fetch(sheetUrl);
         const text = await response.text();
         
